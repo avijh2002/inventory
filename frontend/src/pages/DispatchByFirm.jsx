@@ -53,7 +53,10 @@ const DispatchByQuality = () => {
   const handleQualityClick = (id) => {
     navigate(`/dispatch/firms/${id}`);
   };
-
+  console.log('filteredOrders:', filteredOrders);
+  console.log('uniqueFirms:', uniqueFirms);
+  console.log('sortedFirms:', sortedFirms);
+  
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
       {/* 🏷️ Heading */}

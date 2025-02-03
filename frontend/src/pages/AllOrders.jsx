@@ -58,7 +58,7 @@ const AllOrders = () => {
           onClick={() => {
             handlePrevClick();
           }}
-        >
+        >map
           <Prev />
         </button>
         <h1 className="text-3xl font-bold">All Dispatches</h1>
@@ -108,8 +108,8 @@ const AllOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {paginatedData.length > 0 ? (
-                paginatedData.map((order, index) => (
+              {Array.isArray(paginatedData)&&paginatedData.length > 0 ? (
+                paginatedData?.map((order, index) => (
                   <tr key={index} className="text-[#5E5E5E]">
                     <td className="pl-1">{formatDate(order.date)}</td>
                     <td className="p-3">{order.agent}</td>
