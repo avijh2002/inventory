@@ -133,7 +133,7 @@ const TableSection = ({ title, hasStock }) => {
             className="overflow-y-auto text-[#5E5E5E]"
             style={{ height: "200px" }}
           >
-            {paginatedData.map((item, index) => (
+            {Array.isArray(paginatedData) && paginatedData.map((item, index) => (
               <tr key={index} className="">
                 <td className="px-3">#{truncateId(item._id)}</td>
                 <td className="px-3">{item.name}</td>

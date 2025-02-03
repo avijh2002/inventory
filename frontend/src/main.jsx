@@ -62,7 +62,46 @@ function RoutesComponent() {
           path="/"
           element={authUser ? <Dashboard /> : <Navigate to="/login" />}
         />
-        
+        <Route
+          path="/pending"
+          element={authUser ? <Pending /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/settings"
+          element={authUser ? <Settings /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatch"
+          element={authUser ? <Dispatch /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatches"
+          element={authUser ? <Dispatches /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatch/qualities"
+          element={authUser ? <DispatchByQuality /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatch/qualities/:id"
+          element={authUser ? <DispatchQuality /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatch/firms"
+          element={authUser ? <DispatchByFirm /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dispatch/firms/:id"
+          element={authUser ? <DispatchFirm /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/summary"
+          element={authUser ? <Summary /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/order-history"
+          element={authUser ? <AllOrders /> : <Navigate to="/login" />}
+        />
       </Route>
     )
   );
