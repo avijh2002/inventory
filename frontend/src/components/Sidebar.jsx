@@ -11,7 +11,6 @@ import pending from "../assets/pending.svg";
 import summary from "../assets/summary.svg";
 import newOrder from "../assets/newOrder.svg";
 import newPack from "../assets/newPack.svg";
-import newOrder from "../assets/newOrder.svg";
 import logoutIcon from "../assets/logout.svg";
 import Settings from "../assets/settings.svg";
 
