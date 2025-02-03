@@ -53,10 +53,7 @@ const Dashboard = () => {
       </div>
 
       
-      <WeeklyDispatchGraph />
-
-     
-      <LastProduced />
+      
     </div>
   );
 };
