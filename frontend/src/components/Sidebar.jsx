@@ -4,6 +4,16 @@ import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore.js";
 import NewPackageModal from "./Modals/NewPackageModal";
 import NewOrderModal from "./Modals/NewOrderModal";
+import home from "../assets/home.svg"; 
+import logo from "../assets/logo.png";
+import dispatch from "../assets/dispatch.svg";
+import pending from "../assets/pending.svg";
+import summary from "../assets/summary.svg";
+import newOrder from "../assets/newOrder.svg";
+import newPack from "../assets/newPack.svg";
+import newOrder from "../assets/newOrder.svg";
+import logoutIcon from "../assets/logout.svg";
+import Settings from "../assets/settings.svg";
 
 const Sidebar = () => {
   const { logout } = useAuthStore();
@@ -20,7 +30,7 @@ const Sidebar = () => {
     <div className="w-1/5 h-screen fixed left-0 top-0 flex flex-col ">
       <div className="flex flex-col items-center">
         <img
-          src="../../src/assets/logo.png"
+          src={logo}
           alt="Home"
           className="w-34"
         />
@@ -37,7 +47,7 @@ const Sidebar = () => {
             }
           >
             <img
-              src="../../src/assets/home.svg"
+              src={home}
               alt="Home"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -67,7 +77,7 @@ const Sidebar = () => {
             }
           >
             <img
-              src="../../src/assets/dispatch.svg"
+              src={dispatch}
               alt="Dispatch"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -96,7 +106,7 @@ const Sidebar = () => {
             }
           >
             <img
-              src="../../src/assets/pending.svg"
+              src={pending}
               alt="Pending"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -124,7 +134,7 @@ const Sidebar = () => {
             }
           >
             <img
-              src="../../src/assets/summary.svg"
+              src={summary}
               alt="Summary"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -154,7 +164,7 @@ const Sidebar = () => {
             }
           >
             <img
-              src="../../src/assets/settings.svg"
+              src={Settings}
               alt="Settings"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -182,7 +192,7 @@ const Sidebar = () => {
             onClick={() => setOpenOrderModal(true)}
           >
             <img
-              src="../../src/assets/newOrder.svg"
+              src={newOrder}
               alt="New Order"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -207,7 +217,7 @@ const Sidebar = () => {
             onClick={() => setOpenPackageModal(true)}
           >
             <img
-              src="../../src/assets/newPack.svg"
+              src={newPack}
               alt="New Packaging"
               className="w-4 h-4 sm:relative left-16"
               style={{
@@ -235,7 +245,7 @@ const Sidebar = () => {
             onClick={logout}
           >
             <img
-              src="../../src/assets/logout.svg"
+              src={logoutIcon}
               alt="New Packaging"
               className="w-4 h-4 sm:relative left-16"
               style={{

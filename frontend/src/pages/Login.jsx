@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js"; 
 import toast from "react-hot-toast";
-import logo from "../assets/logo.png";  // Import the logo image
+import logo from "../assets/logo.png";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
