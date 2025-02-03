@@ -32,7 +32,6 @@ export const getFirmsByAgent = async (req, res) => {
 };
 
 export const createFirm = async (req, res) => {
-  console.log(req.body);
   const { name, agent:agentId } = req.body;
 
   try {

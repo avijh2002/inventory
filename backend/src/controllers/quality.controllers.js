@@ -24,7 +24,6 @@ export const getQualityById = async (req, res) => {
 
 export const createQuality = async (req, res) => {
   try {
-    console.log("Received Data:", req.body);
 
     
     const { name, description, inStock, produced, dispatched, history } = req.body;
@@ -45,7 +44,6 @@ export const createQuality = async (req, res) => {
     await newQuality.save();
     res.status(201).json(newQuality);
   } catch (error) {
-    console.error("Error in createQuality:", error);
     res.status(500).json({ message: error.message });
   }
 };

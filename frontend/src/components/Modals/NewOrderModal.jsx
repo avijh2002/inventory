@@ -19,7 +19,7 @@ const NewOrderModal = ({ openOrderModal, onClose }) => {
   const [filteredFirms, setFilteredFirms] = useState([]);
   const [filteredTransport, setFilteredTransport] = useState([]);
   const timestamp = Date.now();
-
+  
   useEffect(() => {
     if (openOrderModal) {
       fetchOrderData();
@@ -98,11 +98,9 @@ const NewOrderModal = ({ openOrderModal, onClose }) => {
     const { selectedQuality, selectedAgent, selectedFirm, selectedTransport, quantity, rate } = formData;
     if (!selectedQuality || !selectedAgent || !selectedFirm || !selectedTransport || !quantity || quantity <= 0 || !rate) {
       toast.error("Please fill in all required fields.");
-      console.log(formData);
       return;
     }
 
-    console.log(formData);
     await createOrder(formData);
     await getPendingOrders();
 

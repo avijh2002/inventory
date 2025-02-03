@@ -9,7 +9,7 @@ const DispatchModal = ({ orderId, onClose }) => {
     getPendingOrdersOfSelectedFirmId, } = useDispatchStore();
     const { id } = useParams();
     const location = useLocation();
-
+    
 const [formData, setFormData] = useState({
   selectedQuality: "",
   selectedAgent: "",
@@ -99,7 +99,6 @@ const resetForm = () => {
   });
 };
 
-  console.log(selectedOrder, "so");
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center bg-[#00000055] ${

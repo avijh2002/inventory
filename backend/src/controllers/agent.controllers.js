@@ -24,7 +24,6 @@ export const getAgent = async (req, res) => {
 export const createAgent = async (req, res) => {
   const { name } = req.body;
   const newAgent = new Agent({ name });
-console.log(newAgent)
   try {
     await newAgent.save();
     res.status(201).json(newAgent);

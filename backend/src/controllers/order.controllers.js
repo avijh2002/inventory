@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 
 export const createOrder = async (req, res) => {
   try {
-    console.log(req.body);
     const {
       selectedAgent: agent,
       selectedFirm: firm,
@@ -66,7 +65,6 @@ export const createOrder = async (req, res) => {
       .status(201)
       .json({ message: "Order created successfully", order: newOrder });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -93,7 +91,6 @@ export const getOrders = async (req, res) => {
     }));
     return res.status(200).json(formattedOrders);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -137,7 +134,6 @@ export const getOrderById = async (req, res) => {
 
     return res.status(200).json(formattedOrder);
   } catch (error) {
-    console.error("Error fetching order:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -166,7 +162,6 @@ export const getPendingOrders = async (req, res) => {
     }));
     return res.status(200).json(formattedOrders);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -198,7 +193,6 @@ export const getDispatchedOrders = async (req, res) => {
     }
     return res.status(200).json(dispatchHistory);
   } catch (error) {
-    console.error("Error fetching dispatched history:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -231,7 +225,6 @@ export const getOrdersByQualityIdAndStatus = async (req, res) => {
     }));
     return res.status(200).json(formattedOrders);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -261,7 +254,6 @@ export const getOrdersByFirmIdAndStatus = async (req, res) => {
     }));
     return res.status(200).json(formattedOrders);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -271,9 +263,6 @@ export const getOrdersByFirmIdAndStatus = async (req, res) => {
 export const dispatchOrder = async (req, res) => {
   const { id } = req.params;
   const { dispatchQuantity, invoiceNumber, remark } = req.body;
-
-  console.log("Order ID:", id);
-  console.log("Dispatch Details:", dispatchQuantity, invoiceNumber, remark);
 
   if (dispatchQuantity == null ) {
     return res.status(400).json({ error: "Dispatch quantity is required." });
@@ -294,7 +283,6 @@ export const dispatchOrder = async (req, res) => {
       return res.status(400).json({ error: "Dispatch quantity can't exceed pending quantity." });
     }
 
-    console.log(order)
 
     const quality = await Quality.findById(order.quality).session(session);
     if (!quality) {
@@ -333,7 +321,6 @@ export const dispatchOrder = async (req, res) => {
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    console.error("Transaction failed:", error);
     return res.status(500).json({ error: "Failed to update order and quality." });
   }
 };
@@ -384,14 +371,11 @@ const {id}=req.params
       return res.status(404).json({ message: "Order not found" });
     }
 
- 
-console.log(order)
     await order.save();
 
     res.status(200).json({ message: "Order updated successfully", order });
 
   } catch (error) {
-    console.error("Error updating order:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

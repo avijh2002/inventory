@@ -16,12 +16,12 @@ dotenv.config();
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
-const app = express();  // ✅ Initialize app FIRST
+const app = express();  
 
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS Configuration
+
 const corsOptions = {
   origin: "http://localhost:5173", 
   credentials: true,               
@@ -30,7 +30,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// ✅ Move production config BELOW app initialization
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -39,7 +38,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/agent", agentRoutes);
 app.use("/api/firm", firmRoutes);

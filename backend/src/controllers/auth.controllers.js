@@ -4,7 +4,6 @@ import { generateToken } from "../lib/utils.js";
 
 export const signup = async (req, res) => {
   try {
-    console.log(req.body);
     const { fullName, email, password, confirmPassword } = req.body;
     if (!fullName || !email || !password || !confirmPassword) {
       return res.status(400).json({
@@ -46,7 +45,6 @@ export const signup = async (req, res) => {
 
     res.status(200).json(newUser);
   } catch (error) {
-    console.log("error in signup controller", error.message);
     res.status(500).json({ message: "internal server error" });
   }
 };
@@ -77,7 +75,6 @@ export const login = async (req, res) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.log("error in login controller", error.message);
     res.status(500).json({ message: "internal server error" });
   }
 };
@@ -87,7 +84,6 @@ export const logout = (req, res) => {
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    console.log("error in logout controller", error.message);
     res.status(500).json({ message: "internal server error" });
   }
 };
@@ -97,7 +93,6 @@ export const checkAuth=async (req,res)=>{
     try {
       res.status(200).json(req.user);
     } catch (error) {
-      console.log("error in checkAuth controller", error.message);
       res.status(500).json({ message: "internal server error" });
     }
   };

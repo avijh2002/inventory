@@ -2,163 +2,125 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
+const handleApiRequest = async (set, requestFn, successToastMessage, errorToastMessage) => {
+  set({ loading: true, error: null });
+  try {
+    const res = await requestFn();
+    if (successToastMessage) toast.success(successToastMessage);
+    return res;
+  } catch (error) {
+    set({ error: error.message });
+    if (errorToastMessage) toast.error(`${errorToastMessage}: ${error.message}`);
+    return null;
+  } finally {
+    set({ loading: false });
+  }
+};
+
 export const useOrderStore = create((set, get) => ({
   quality: [],
   agent: [],
   firm: [],
   transport: [],
   pendingOrders: [],
-  selectedOrder:[],
-  allOrders:[],
+  selectedOrder: [],
+  allOrders: [],
   loading: false,
   error: null,
-  
-  fetchOrderData: async () => {
-    set({ loading: true, error: null });
-    try {
-      const [qualityRes, agentsRes, firmsRes, transportRes] = await Promise.all(
-        [
-          axiosInstance.get("/quality"),
-          axiosInstance.get("/agent"),
-          axiosInstance.get("/firm"),
-          axiosInstance.get("/transport"),
-        ]
-      );
 
+  // Fetching order-related data
+  fetchOrderData: async () => {
+    await handleApiRequest(set, async () => {
+      const [qualityRes, agentsRes, firmsRes, transportRes] = await Promise.all([
+        axiosInstance.get("/quality"),
+        axiosInstance.get("/agent"),
+        axiosInstance.get("/firm"),
+        axiosInstance.get("/transport"),
+      ]);
       set({
         quality: qualityRes.data,
         agent: agentsRes.data,
         firm: firmsRes.data,
         transport: transportRes.data,
       });
-    } catch (error) {
-      set({ error: error.message });
-    } finally {
-      set({ loading: false });
-    }
+    });
   },
+
   fetchAgents: async () => {
-    set({ loading: true, error: null });
-    try {
-      const agentsRes = await axiosInstance.get("/agent")
-      set({
-        agent: agentsRes.data,
-      });
-    } catch (error) {
-      set({ error: error.message });
-    } finally {
-      set({ loading: false,error:null });
-    }
+    await handleApiRequest(set, async () => {
+      const agentsRes = await axiosInstance.get("/agent");
+      set({ agent: agentsRes.data });
+    });
   },
-  
+
   fetchQuality: async () => {
-    set({ loading: true, error: null });
-    try {
-      const agentsRes = await axiosInstance.get("/quality")
-      set({
-        quality: qualityRes.data,
-      });
-    } catch (error) {
-      set({ error: error.message });
-    } finally {
-      set({ loading: false,error:null });
-    }
+    await handleApiRequest(set, async () => {
+      const qualityRes = await axiosInstance.get("/quality");
+      set({ quality: qualityRes.data });
+    });
   },
 
   fetchFirms: async (agentId) => {
-    try {
-        if (!agentId) {
-            set({ firms: [], transports: [] });
-            return;
-        }
-        const res = await axios.get(`/api/firms/${agentId}`);
-        set({ firms: res.data, transports: [] });
-    } catch (error) {
-        set({ firms: [], transports: [] }); 
+    if (!agentId) {
+      set({ firms: [], transports: [] });
+      return;
     }
-},
-
-fetchTransports: async (firmId) => {
-    try {
-        if (!firmId) {
-            set({ transports: [] });
-            return;
-        }
-        const res = await axios.get(`/api/transports/${firmId}`);
-        set({ transports: res.data });
-    } catch (error) {
-        set({ transports: [] }); 
-    }
-},
-
-
-
-  createOrder:async(orderData)=>{
-    set({ loading: true, error: null });
-    try {
-      const res= await axiosInstance.post("/order",orderData)
-      toast.success("order created successfully")
-    } catch (error) {
-      set({ error: error.message});
-    } finally {
-      set({ loading: false,error:null });
-    }
+    await handleApiRequest(set, async () => {
+      const res = await axiosInstance.get(`/api/firms/${agentId}`);
+      set({ firms: res.data, transports: [] });
+    });
   },
 
-  getPendingOrders: async () => {
-    set({ loading: true, error: null });
+  fetchTransports: async (firmId) => {
+    if (!firmId) {
+      set({ transports: [] });
+      return;
+    }
+    await handleApiRequest(set, async () => {
+      const res = await axiosInstance.get(`/api/transports/${firmId}`);
+      set({ transports: res.data });
+    });
+  },
 
-    try {
+  // Creating an order
+  createOrder: async (orderData) => {
+    await handleApiRequest(set, async () => {
+      const res = await axiosInstance.post("/order", orderData);
+      return res;
+    }, "Order created successfully", "Failed to create order");
+  },
+
+  // Fetching pending orders
+  getPendingOrders: async () => {
+    await handleApiRequest(set, async () => {
       const orderRes = await axiosInstance.get("/order/pending");
       set({ pendingOrders: orderRes.data });
-    } catch (error) {
-      set({ error: error.message });
-      toast.error(`Failed to fetch orders: ${error.message}`);
-    } finally {
-      set({ loading: false }); 
-    }
+    }, null, "Failed to fetch pending orders");
   },
 
+  // Fetching all orders
   getAllOrders: async () => {
-    set({ loading: true, error: null });
-    try {
+    await handleApiRequest(set, async () => {
       const orderRes = await axiosInstance.get("/order");
       set({ allOrders: orderRes.data });
-    } catch (error) {
-      set({ error: error.message });
-      toast.error(`Failed to fetch orders: ${error.message}`);
-    } finally {
-      set({ loading: false });
-    }
+    }, null, "Failed to fetch all orders");
   },
 
-
-  getPendingOrderById:async(id)=>{
-    set({ loading: true, error: null });
-    try {
+  // Fetching a specific pending order by ID
+  getPendingOrderById: async (id) => {
+    return await handleApiRequest(set, async () => {
       const orderRes = await axiosInstance.get(`/order/${id}`);
       set({ selectedOrder: orderRes.data });
-      return orderRes.data
-    } catch (error) {
-      set({ error: error.message });
-      toast.error(`Failed to fetch orders: ${error.message}`);
-    } finally {
-      set({ loading: false });
-    }
+      return orderRes.data;
+    }, null, "Failed to fetch order by ID");
   },
 
-  updateOrder:async(id,formData)=>{
-    set({ loading: true, error: null });
-    try {
-      const orderRes = await axiosInstance.patch(`/order/update/${id}`,formData);
+  // Updating an order
+  updateOrder: async (id, formData) => {
+    return await handleApiRequest(set, async () => {
+      const orderRes = await axiosInstance.patch(`/order/update/${id}`, formData);
       set({ selectedOrder: orderRes.data });
-      return orderRes.data
-    } catch (error) {
-      set({ error: error.message });
-      toast.error(`Failed to fetch orders: ${error.message}`);
-    } finally {
-      set({ loading: false }); 
-    }
-  }
-  
+      return orderRes.data;
+    }, "Order updated successfully", "Failed to update order");
+  },
 }));

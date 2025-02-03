@@ -43,7 +43,6 @@ export const createTransport = async (req, res) => {
     await newTransport.save();
     res.status(201).json(newTransport);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Failed to create transport" });
   }
 };

@@ -54,7 +54,6 @@ const DispatchByQuality = () => {
   const handleQualityClick = (id) => {
     navigate(`/dispatch/qualities/${id}`);
   };
-console.log(paginatedData)
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
  
