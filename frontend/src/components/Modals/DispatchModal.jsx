@@ -1,92 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useLocation,useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatchStore } from "../../store/useDispatchStore.js";
 import { formatDate } from "../../lib/utils.js";
 import toast from "react-hot-toast";
 
 const DispatchModal = ({ orderId, onClose }) => {
-  const { getPendingOrderById, selectedOrder, dispatchOrder,getPendingOrdersOfSelectedQualityId,
-    getPendingOrdersOfSelectedFirmId, } = useDispatchStore();
-    const { id } = useParams();
-    const location = useLocation();
-    
-const [formData, setFormData] = useState({
-  selectedQuality: "",
-  selectedAgent: "",
-  selectedFirm: "",
-  selectedTransport: "",
-  pendingQuantity: "",
-  dispatchQuantity: "",
-  rate: "",
-  poNumber: "",
-  remark: "",
-});
-console.log(orderId)
-useEffect(() => {
-  if (orderId) {
-    getPendingOrderById(orderId);
-  }
-}, [orderId]);
+  const { getPendingOrderById, selectedOrder, dispatchOrder, getPendingOrdersOfSelectedQualityId,
+    getPendingOrdersOfSelectedFirmId } = useDispatchStore();
+  const { id } = useParams();
+  const location = useLocation();
 
-useEffect(() => {
-  setFormData({
-    selectedQuality: selectedOrder?.quality || "",
-    selectedAgent: selectedOrder?.agent || "",
-    selectedFirm: selectedOrder?.firm || "",
-    selectedTransport: selectedOrder?.transport || "",
-    pendingQuantity: selectedOrder?.pendingQuantity || "",
-    dispatchQuantity: "",
-    invoiceNumber:"",
-    rate: selectedOrder?.rate || "",
-    remark: selectedOrder?.remark || "",
-  });
-}, [selectedOrder]);
-
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: name === "dispatchQuantity"  ? Number(value) || "" : value,
-  }));
-};
-const truncateId = (id) => `${id.slice(0, 5)}...${id.slice(-5)}`;
-
-  const timestamp = Date.now();
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const {  dispatchQuantity,invoiceNumber, remark } = formData;
-  
-    if (!dispatchQuantity || dispatchQuantity <= 0 || dispatchQuantity > formData.pendingQuantity) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-  
-    
-    try{
-      await dispatchOrder(orderId, { dispatchQuantity, invoiceNumber, remark });
-
-      if(location.pathname.startsWith("/dispatch/firms")){
-        await getPendingOrdersOfSelectedFirmId(id);
-      }
-      if(location.pathname.startsWith("/dispatch/quality")){
-        await getPendingOrdersOfSelectedQualityId(id);
-      }
-    } finally{
-      handleClose();
-    }
-    
-    
-  }
-  
-
-const handleClose = () => {
-  onClose();
-  resetForm();
-};
-
-const resetForm = () => {
-  setFormData({
+  // Initialize formData with empty strings to ensure controlled inputs from the start
+  const [formData, setFormData] = useState({
     selectedQuality: "",
     selectedAgent: "",
     selectedFirm: "",
@@ -97,7 +22,84 @@ const resetForm = () => {
     poNumber: "",
     remark: "",
   });
-};
+
+  console.log(orderId);
+
+  useEffect(() => {
+    if (orderId) {
+      getPendingOrderById(orderId);
+    }
+  }, [orderId]);
+
+  useEffect(() => {
+    if (selectedOrder) {
+      setFormData({
+        selectedQuality: selectedOrder?.quality || "",
+        selectedAgent: selectedOrder?.agent || "",
+        selectedFirm: selectedOrder?.firm || "",
+        selectedTransport: selectedOrder?.transport || "",
+        pendingQuantity: selectedOrder?.pendingQuantity || "",
+        dispatchQuantity: "",
+        invoiceNumber: "",
+        rate: selectedOrder?.rate || "",
+        remark: selectedOrder?.remark || "",
+      });
+    }
+  }, [selectedOrder]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === "dispatchQuantity" ? Number(value) || "" : value,
+    }));
+  };
+
+  const truncateId = (id) => `${id.slice(0, 5)}...${id.slice(-5)}`;
+
+  const timestamp = Date.now();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { dispatchQuantity, invoiceNumber, remark } = formData;
+
+    if (!dispatchQuantity || dispatchQuantity <= 0 || dispatchQuantity > formData.pendingQuantity) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      await dispatchOrder(orderId, { dispatchQuantity, invoiceNumber, remark });
+
+      if (location.pathname.startsWith("/dispatch/firms")) {
+        await getPendingOrdersOfSelectedFirmId(id);
+      }
+      if (location.pathname.startsWith("/dispatch/quality")) {
+        await getPendingOrdersOfSelectedQualityId(id);
+      }
+    } finally {
+      handleClose();
+    }
+  };
+
+  const handleClose = () => {
+    onClose();
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setFormData({
+      selectedQuality: "",
+      selectedAgent: "",
+      selectedFirm: "",
+      selectedTransport: "",
+      pendingQuantity: "",
+      dispatchQuantity: "",
+      rate: "",
+      poNumber: "",
+      remark: "",
+    });
+  };
 
   return (
     <div

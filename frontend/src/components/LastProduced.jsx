@@ -3,12 +3,14 @@ import { formatDate } from "../lib/utils";
 import { usePackageStore } from "../store/usePackageStore";
 
 const LastProduced = () => {
-  const {getLastProduced,lastProduced}=usePackageStore();
+  const { getLastProduced, lastProduced } = usePackageStore();
 
   useEffect(() => {
     getLastProduced();
   }, [getLastProduced]);
-console.log(lastProduced)
+
+  console.log(lastProduced);
+
   return (
     <div className="w-full max-w-4xl bg-white shadow-md rounded-lg overflow-hidden">
       <table className="w-full border-collapse">
@@ -20,7 +22,8 @@ console.log(lastProduced)
           </tr>
         </thead>
         <tbody>
-          {lastProduced.length > 0 ? (
+          {/* Check if lastProduced is an array and has data */}
+          {Array.isArray(lastProduced) && lastProduced.length > 0 ? (
             lastProduced.map((q, index) => (
               <tr key={index} className="text-[#5E5E5E]">
                 <td className="pl-3">{formatDate(q.date)}</td>
