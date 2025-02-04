@@ -23,11 +23,7 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-<<<<<<< HEAD:backend/index.js
   origin: "https://inventory-3-907g.onrender.com", 
-=======
-  origin: "https://inventory-rcxm.vercel.app", 
->>>>>>> origin/main:backend/src/index.js
   credentials: true,               
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],  
