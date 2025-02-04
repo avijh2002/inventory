@@ -355,27 +355,62 @@ export const getDispachSummary = async (req, res) => {
 
 
 
+import mongoose from "mongoose";
+import Order from "../models/Order.js"; // Ensure correct path
+
 export const updateOrder = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
-    const {selectedAgent,selectedQuality,selectedFirm,selectedTransport,quantity,rate,poNumber,remark}=req.body
-const {id}=req.params
+    const { selectedAgent, selectedQuality, selectedFirm, selectedTransport, quantity, rate, poNumber, remark } = req.body;
+    const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid order ID" });
     }
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { agent:selectedAgent,quality:selectedQuality,firm:selectedFirm,transport:selectedTransport , pendingQuantity:quantity-order.dispatchedQuantity,orderQuantity:quantity,rate,PoNumber:poNumber,remark },
-      { new: true }
-    );
-    if (!order) {
+
+    // Fetch the existing order inside the session
+    const existingOrder = await Order.findById(id).session(session);
+    if (!existingOrder) {
+      await session.abortTransaction();
+      session.endSession();
       return res.status(404).json({ message: "Order not found" });
     }
 
-    await order.save();
+    // Calculate pending quantity
+    const pendingQuantity = quantity - existingOrder.dispatchedQuantity;
 
-    res.status(200).json({ message: "Order updated successfully", order });
+    // Update order within transaction
+    const updatedOrder = await Order.findByIdAndUpdate(
+      id,
+      {
+        agent: selectedAgent,
+        quality: selectedQuality,
+        firm: selectedFirm,
+        transport: selectedTransport,
+        orderQuantity: quantity,
+        pendingQuantity,
+        rate,
+        poNumber,
+        remark,
+      },
+      { new: true, session }
+    );
+
+    // Commit transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ message: "Order updated successfully", order: updatedOrder });
 
   } catch (error) {
+    // Rollback transaction on error
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error("Update Order Error:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
