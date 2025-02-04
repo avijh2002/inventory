@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { toast } from "react-hot-toast";
-import logo from "../assets/logo.png"; // Import the logo image
+import logo from "../assets/logo.png";
+import authpic from "../assets/authpic.png";
+import authicon from "../assets/authicon.svg"
+
 
 const SignupPage = () => {
   const { authUser, isSigningUp, signup } = useAuthStore();
@@ -42,11 +45,9 @@ const SignupPage = () => {
     <div className="flex min-h-screen">
       <div className="w-full md:w-3/5 flex flex-col justify-center items-center bg-white ">
         <span className="text-red-600 ml-2">
-          <img src={logo} alt="Logo" className="w-30 h-30 object-contain " />
+          <img src={logo} alt="Logo" className="h-24 object-contain " />
         </span>
-        <h1 className="w-1/2 text-4xl font-bold text-black flex items-center gap-2">
-          Welcome
-        </h1>
+        <h1 className="text-3xl font-semibold mb-2 text-center flex items-end">Welcome <img src={authicon} alt="Auth" className="w-12 h-12" /></h1>
         <p className="w-1/2 text-gray-500 mt-2">
           Create an account and manage your inventory with ease.
         </p>

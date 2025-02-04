@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "backen/index.js",
+  "main": "backend/index.js",
   "type": "module",
   "scripts": {
     "build":"npm install && npm install --prefix frontend && npm run build --prefix frontend",
