@@ -92,7 +92,7 @@ const DispatchFirm = () => {
           <thead className="">
             <tr className="text-left">
               <th className="p-3">Agent</th>
-              <th className="p-3">Firm Name</th>
+              <th className="p-3">quality Name</th>
               <th className="p-3">Rate</th>
               <th className="p-3">Quantity</th>
             </tr>
@@ -102,7 +102,7 @@ const DispatchFirm = () => {
               paginatedData.map((order, index) => (
                 <tr key={index} className="text-[#5E5E5E] ">
                   <td className="p-3">{order.agent}</td>
-                  <td className="p-3">{order.firm}</td>
+                  <td className="p-3">{order.quality}</td>
                   <td className="p-3">{order.rate}</td>
                   <td className="p-3">{order.quantity}</td>
                   <td className="pl-3">

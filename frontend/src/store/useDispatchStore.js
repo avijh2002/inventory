@@ -12,7 +12,7 @@ const handleApiRequest = async (set, requestFn, successToastMessage, errorToastM
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred.';
     set({ error: errorMessage });
-    if (errorToastMessage) toast.error(errorToastMessage || errorMessage);
+    if (errorToastMessage) toast.error(errorMessage||errorToastMessage);
     return null;
   } finally {
     set({ loading: false });
@@ -73,8 +73,7 @@ export const useDispatchStore = create((set) => ({
   dispatchOrder: async (Id, dispatchData) => {
     await handleApiRequest(set, async () => {
       const orderRes = await axiosInstance.patch(`/order/dispatch/${Id}`, dispatchData);
-      toast.success("Order successfully dispatched");
-    }, "Order successfully dispatched", "Failed to dispatch order");
+    }, "Order successfully dispatched", "Not enough Quantities in stock");
   },
 
   // Get weekly dispatch summary

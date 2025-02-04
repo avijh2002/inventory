@@ -40,7 +40,7 @@ console.log(A)
     e.preventDefault();
     console.log(selectedQuality,quantity)
     if (!selectedQuality || !quantity || quantity <= 0) {
-      alert("Please select a quality and enter a valid quantity.");
+      toast.error("Please fill in all required fields.");
       return;
     }
 
