@@ -4,6 +4,7 @@ import { generateToken } from "../lib/utils.js";
 
 export const signup = async (req, res) => {
   try {
+    console.log(req.body);
     const { fullName, email, password, confirmPassword } = req.body;
     if (!fullName || !email || !password || !confirmPassword) {
       return res.status(400).json({
@@ -45,6 +46,7 @@ export const signup = async (req, res) => {
 
     res.status(200).json(newUser);
   } catch (error) {
+    console.log("error in signup controller", error.message);
     res.status(500).json({ message: "internal server error" });
   }
 };

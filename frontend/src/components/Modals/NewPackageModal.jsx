@@ -19,7 +19,8 @@ const NewPackageModal = ({ openPackageModal, onClose }) => {
       const match = str.match(/\d+/);
       return match ? parseInt(match[0], 10) : 0;
     };
-
+let A;
+console.log(A)
     const nameA = a.name.toLowerCase();
     const nameB = b.name.toLowerCase();
     const numA = extractNumber(a.name);

@@ -9,7 +9,7 @@ import { useDispatchStore } from "../store/useDispatchStore.js";
 const Dashboard = () => {
   const { getPendingOrders, pendingOrders } = useOrderStore();
   const { getDispatchedOrders, dispatchedOrders } = useDispatchStore();
-console.log(pendingOrders)
+
   useEffect(() => {
     getPendingOrders();
   }, [getPendingOrders]);
@@ -53,7 +53,10 @@ console.log(pendingOrders)
       </div>
 
       
-      
+      <WeeklyDispatchGraph />
+
+     
+      <LastProduced />
     </div>
   );
 };
