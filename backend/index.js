@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-  origin: "http://localhost:5173", 
+  origin: "https://inventory-3-907g.onrender.com", 
   credentials: true,               
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],  
