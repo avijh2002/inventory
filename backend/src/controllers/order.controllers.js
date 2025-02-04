@@ -364,7 +364,7 @@ const {id}=req.params
     }
     const order = await Order.findByIdAndUpdate(
       id,
-      { agent:selectedAgent,quality:selectedQuality,firm:selectedFirm,transport:selectedTransport , pendingQuantity:quantity-order.dispatchedQuantityQuantity,orderQuantity:quantity,rate,PoNumber:poNumber,remark },
+      { agent:selectedAgent,quality:selectedQuality,firm:selectedFirm,transport:selectedTransport , pendingQuantity:quantity-order.dispatchedQuantity,orderQuantity:quantity,rate,PoNumber:poNumber,remark },
       { new: true }
     );
     if (!order) {

@@ -58,10 +58,10 @@ const AllOrders = () => {
           onClick={() => {
             handlePrevClick();
           }}
-        >map
+        >
           <Prev />
         </button>
-        <h1 className="text-3xl font-bold">All Dispatches</h1>
+        <h1 className="text-3xl font-bold">All Orders</h1>
       </div>
 
       {/* Search Bar & Add Order Button */}
@@ -97,7 +97,7 @@ const AllOrders = () => {
           <table className="w-full border-collapse min-w-max">
             <thead>
               <tr className="text-left">
-                <th className="pl-1">Date</th>
+                <th className="p-3">Date</th>
                 <th className="p-3">Agent</th>
                 <th className="p-3">Firm</th>
                 <th className="p-3">Transport</th>
@@ -111,7 +111,7 @@ const AllOrders = () => {
               {Array.isArray(paginatedData)&&paginatedData.length > 0 ? (
                 paginatedData?.map((order, index) => (
                   <tr key={index} className="text-[#5E5E5E]">
-                    <td className="pl-1">{formatDate(order.date)}</td>
+                    <td className="p-3">{formatDate(order.date)}</td>
                     <td className="p-3">{order.agent}</td>
                     <td className="p-3">{order.firm}</td>
                     <td className="p-3">{order.transport}</td>

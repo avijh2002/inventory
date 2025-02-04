@@ -66,7 +66,7 @@ const Pending = () => {
         <table className="w-full border-collapse">
           <thead className="">
             <tr className="text-left">
-              <th className="pl-1">Date</th>
+              <th className="p-3">Date</th>
               <th className="p-3">Agent</th>
               <th className="p-3">Firm Name</th>
               <th className="p-3">Rate</th>
@@ -78,7 +78,7 @@ const Pending = () => {
             {paginatedData.length > 0 ? (
               paginatedData.map((order, index) => (
                 <tr key={index} className="text-[#5E5E5E] ">
-                  <td className="pl-1">{formatDate(order.date)}</td>
+                  <td className="p-3">{formatDate(order.date)}</td>
                   <td className="p-3">{order.agent}</td>
                   <td className="p-3">{order.firm}</td>
                   <td className="p-3">{order.rate }</td>
