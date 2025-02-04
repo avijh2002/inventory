@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-  origin: "https://inventory-rcxm.vercel.app/", 
+  origin: "https://inventory-rcxm.vercel.app", 
   credentials: true,               
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],  
