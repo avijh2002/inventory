@@ -29,6 +29,8 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],  
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle OPTIONS requests
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
