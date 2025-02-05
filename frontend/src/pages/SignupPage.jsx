@@ -5,8 +5,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import { toast } from "react-hot-toast";
 import logo from "../assets/logo.png";
 import authpic from "../assets/authpic.png";
-import authicon from "../assets/authicon.svg"
-
+import authicon from "../assets/authicon.svg";
 
 const SignupPage = () => {
   const { authUser, isSigningUp, signup } = useAuthStore();
@@ -47,7 +46,9 @@ const SignupPage = () => {
         <span className="text-red-600 ml-2">
           <img src={logo} alt="Logo" className="h-24 object-contain " />
         </span>
-        <h1 className="text-3xl font-semibold mb-2 text-center flex items-end">Welcome <img src={authicon} alt="Auth" className="w-12 h-12" /></h1>
+        <h1 className="text-3xl font-semibold mb-2 text-center flex items-end">
+          Welcome <img src={authicon} alt="Auth" className="w-12 h-12" />
+        </h1>
         <p className="w-1/2 text-gray-500 mt-2">
           Create an account and manage your inventory with ease.
         </p>
@@ -131,12 +132,9 @@ const SignupPage = () => {
       </div>
 
       {/* Right Section */}
-      <div
-        className="hidden md:block w-2/5 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('src/assets/authpic.png')",
-        }}
-      ></div>
+      <div className="hidden md:flex w-2/5 justify-center items-center bg-cover bg-center" style={{ backgroundImage: `url(${authpic})` }}>
+        <img src={authpic} alt="Auth" className="w-80 h-auto object-cover" />
+      </div>
     </div>
   );
 };
