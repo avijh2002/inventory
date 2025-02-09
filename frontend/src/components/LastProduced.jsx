@@ -9,7 +9,6 @@ const LastProduced = () => {
     getLastProduced();
   }, [getLastProduced]);
 
-  console.log(lastProduced);
 
   return (
     <div className="w-full max-w-4xl bg-white shadow-md rounded-lg overflow-hidden">

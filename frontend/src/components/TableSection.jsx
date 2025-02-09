@@ -28,7 +28,6 @@ const TableSection = ({ title, hasStock }) => {
 
   const handleAdd = (formData) => {
     addEntry(title.toLowerCase(), formData);
-    console.log(formData);
     setIsModalOpen(false);
   };
 

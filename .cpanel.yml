@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/himalaya/public_html/
+    - /bin/cp * $DEPLOYPATH
